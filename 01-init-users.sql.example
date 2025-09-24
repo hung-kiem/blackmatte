@@ -1,0 +1,53 @@
+\echo '=== Initializing BlackMatte Database Users ==='
+
+\c blackmatte_blog
+
+\echo 'Creating application users...'
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'blackmatte_admin') THEN
+        CREATE USER blackmatte_admin WITH PASSWORD 'YOUR_ADMIN_PASSWORD_HERE';
+        \echo 'Created user: blackmatte_admin'
+    ELSE
+        \echo 'User blackmatte_admin already exists'
+    END IF;
+END
+$$;
+
+DO
+$$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'blackmatte_readonly') THEN
+        CREATE USER blackmatte_readonly WITH PASSWORD 'YOUR_READONLY_PASSWORD_HERE';
+        \echo 'Created user: blackmatte_readonly'
+    ELSE
+        \echo 'User blackmatte_readonly already exists'
+    END IF;
+END
+$$;
+
+GRANT ALL PRIVILEGES ON DATABASE blackmatte_blog TO blackmatte_admin;
+GRANT ALL ON SCHEMA public TO blackmatte_admin;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO blackmatte_admin;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO blackmatte_admin;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO blackmatte_admin;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO blackmatte_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO blackmatte_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON FUNCTIONS TO blackmatte_admin;
+
+-- Cấp quyền cho readonly user
+GRANT CONNECT ON DATABASE blackmatte_blog TO blackmatte_readonly;
+GRANT USAGE ON SCHEMA public TO blackmatte_readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO blackmatte_readonly;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO blackmatte_readonly;
+
+-- Tạo extensions
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pg_trgm";
+CREATE EXTENSION IF NOT EXISTS "unaccent";
+CREATE EXTENSION IF NOT EXISTS "citext";
+
+\echo '=== Initialization Complete ==='
