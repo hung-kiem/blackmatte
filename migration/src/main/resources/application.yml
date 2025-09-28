@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active: ${ENV:dev}
+  flyway:
+    # Migration files location
+    locations: classpath:db/migration
+    # Schema settings
+    schemas: public
+    default-schema: public
+    # Migration behavior
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    clean-disabled: true
+    # Encoding
+    encoding: UTF-8
+    # Output settings
+    output-query-results: true
+    skip-default-callbacks: false
+    placeholder-replacement: false
+    # Connection settings
+    connect-retries: 3
+    connect-retries-interval: 120
+    lock-retry-count: 50
+    # Migration order
+    out-of-order: false
+    mixed: false
+logging:
+  level:
+    org:
+      flywaydb: INFO
+      springframework: INFO
+    com:
+      blackmatte: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
