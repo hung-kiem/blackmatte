@@ -1,9 +1,10 @@
 spring:
-  flyway:
+  datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/blackmatte_blog}
-    user: ${DB_USER:blackmatte_admin}
+    username: ${DB_USER:blackmatte_admin}
     password: ${DB_PASSWORD:AdminBlackmatte@2024}
 
+  flyway:
     output-query-results: true
     connect-retries: 2
     connect-retries-interval: 60
@@ -12,8 +13,3 @@ logging:
   level:
     org.flywaydb: DEBUG
     org.springframework: DEBUG
-    com.blackmatte: DEBUG
-    org.postgresql: DEBUG
-  pattern:
-    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
-debug: true

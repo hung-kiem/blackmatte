@@ -1,13 +1,11 @@
 spring:
-  flyway:
+  datasource:
     url: ${DB_URL}
-    user: ${DB_USER}
+    username: ${DB_USER}
     password: ${DB_PASSWORD}
 
+  flyway:
     output-query-results: false
     connect-retries: 5
     connect-retries-interval: 180
     lock-retry-count: 100
-
-    validate-on-migrate: true
-    clean-disabled: true
