@@ -169,40 +169,55 @@ COMMENT ON COLUMN albums.updated_at IS 'Thời điểm cập nhật album cuối
 -- =====================================================
 
 -- Tạo bảng documentation cho các enum values
-CREATE TABLE IF NOT EXISTS enum_documentation (
-                                                  id BIGSERIAL PRIMARY KEY,
-                                                  table_name VARCHAR(50) NOT NULL,
+CREATE TABLE IF NOT EXISTS enum_documentation
+(
+    id          BIGSERIAL PRIMARY KEY,
+    table_name  VARCHAR(50) NOT NULL,
     column_name VARCHAR(50) NOT NULL,
-    enum_value VARCHAR(50) NOT NULL,
-    description TEXT NOT NULL,
-    example TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
+    enum_value  VARCHAR(50) NOT NULL,
+    description TEXT        NOT NULL,
+    example     TEXT,
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 COMMENT ON TABLE enum_documentation IS 'Bảng tài liệu hóa ý nghĩa các giá trị enum trong hệ thống';
 
 -- Insert enum documentation
-INSERT INTO enum_documentation (table_name, column_name, enum_value, description, example) VALUES
+INSERT INTO enum_documentation (table_name, column_name, enum_value, description, example)
+VALUES
 -- posts.status
-('posts', 'status', 'DRAFT', 'Bài viết đang trong quá trình soạn thảo, chưa xuất bản', 'Bài viết mới tạo, chưa hoàn thiện nội dung'),
-('posts', 'status', 'PUBLISHED', 'Bài viết đã được xuất bản và hiển thị công khai', 'Bài viết đã hoàn thành và sẵn sàng cho độc giả'),
+('posts', 'status', 'DRAFT', 'Bài viết đang trong quá trình soạn thảo, chưa xuất bản',
+ 'Bài viết mới tạo, chưa hoàn thiện nội dung'),
+('posts', 'status', 'PUBLISHED', 'Bài viết đã được xuất bản và hiển thị công khai',
+ 'Bài viết đã hoàn thành và sẵn sàng cho độc giả'),
 
 -- youtube_videos.status
-('youtube_videos', 'status', 'DRAFT', 'Video đang trong quá trình chuẩn bị, chưa hiển thị công khai', 'Video mới thêm, chưa viết mô tả'),
-('youtube_videos', 'status', 'PUBLISHED', 'Video đã được xuất bản và hiển thị công khai trên blog', 'Video đã sẵn sàng cho người xem'),
+('youtube_videos', 'status', 'DRAFT', 'Video đang trong quá trình chuẩn bị, chưa hiển thị công khai',
+ 'Video mới thêm, chưa viết mô tả'),
+('youtube_videos', 'status', 'PUBLISHED', 'Video đã được xuất bản và hiển thị công khai trên blog',
+ 'Video đã sẵn sàng cho người xem'),
 ('youtube_videos', 'status', 'PRIVATE', 'Video riêng tư, chỉ admin có thể xem', 'Video cá nhân không muốn chia sẻ'),
-('youtube_videos', 'status', 'UNLISTED', 'Video không được liệt kê trong danh sách nhưng có thể truy cập qua link trực tiếp', 'Video chia sẻ với một nhóm người cụ thể'),
+('youtube_videos', 'status', 'UNLISTED',
+ 'Video không được liệt kê trong danh sách nhưng có thể truy cập qua link trực tiếp',
+ 'Video chia sẻ với một nhóm người cụ thể'),
 
 -- gallery_photos.status
-('gallery_photos', 'status', 'DRAFT', 'Ảnh đang trong quá trình xử lý, chưa hiển thị công khai', 'Ảnh mới upload, chưa chỉnh sửa'),
-('gallery_photos', 'status', 'PUBLISHED', 'Ảnh đã được xuất bản và hiển thị trong thư viện', 'Ảnh đã chỉnh sửa xong và sẵn sàng hiển thị'),
-('gallery_photos', 'status', 'PRIVATE', 'Ảnh riêng tư, chỉ admin có thể xem', 'Ảnh cá nhân không muốn chia sẻ công khai'),
+('gallery_photos', 'status', 'DRAFT', 'Ảnh đang trong quá trình xử lý, chưa hiển thị công khai',
+ 'Ảnh mới upload, chưa chỉnh sửa'),
+('gallery_photos', 'status', 'PUBLISHED', 'Ảnh đã được xuất bản và hiển thị trong thư viện',
+ 'Ảnh đã chỉnh sửa xong và sẵn sàng hiển thị'),
+('gallery_photos', 'status', 'PRIVATE', 'Ảnh riêng tư, chỉ admin có thể xem',
+ 'Ảnh cá nhân không muốn chia sẻ công khai'),
 
 -- projects.project_type
-('projects', 'project_type', 'PERSONAL', 'Dự án cá nhân, tự thực hiện trong thời gian rảnh', 'Blog cá nhân, ứng dụng mobile cho bản thân'),
-('projects', 'project_type', 'COMPANY', 'Dự án của công ty, thực hiện trong thời gian làm việc', 'Hệ thống ERP, website công ty'),
-('projects', 'project_type', 'FREELANCE', 'Dự án freelance, nhận từ khách hàng bên ngoài', 'Website bán hàng cho khách hàng, ứng dụng đặt hàng'),
-('projects', 'project_type', 'OPENSOURCE', 'Dự án mã nguồn mở, đóng góp cho cộng đồng', 'Library JavaScript, plugin WordPress'),
+('projects', 'project_type', 'PERSONAL', 'Dự án cá nhân, tự thực hiện trong thời gian rảnh',
+ 'Blog cá nhân, ứng dụng mobile cho bản thân'),
+('projects', 'project_type', 'COMPANY', 'Dự án của công ty, thực hiện trong thời gian làm việc',
+ 'Hệ thống ERP, website công ty'),
+('projects', 'project_type', 'FREELANCE', 'Dự án freelance, nhận từ khách hàng bên ngoài',
+ 'Website bán hàng cho khách hàng, ứng dụng đặt hàng'),
+('projects', 'project_type', 'OPENSOURCE', 'Dự án mã nguồn mở, đóng góp cho cộng đồng',
+ 'Library JavaScript, plugin WordPress'),
 
 -- projects.status
 ('projects', 'status', 'COMPLETED', 'Dự án đã hoàn thành và đã bàn giao', 'Website đã launch thành công'),
@@ -218,19 +233,18 @@ INSERT INTO enum_documentation (table_name, column_name, enum_value, description
 ('taggable', 'taggable_type', 'PLAYLIST', 'Tag được gắn cho playlist video', 'Tag "Education" cho playlist học tập'),
 ('taggable', 'taggable_type', 'ALBUM', 'Tag được gắn cho album ảnh', 'Tag "Nature" cho album ảnh thiên nhiên')
 
-    ON CONFLICT DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 -- =====================================================
 -- ADDITIONAL HELPFUL QUERIES DOCUMENTATION
 -- =====================================================
 
 CREATE OR REPLACE VIEW enum_reference AS
-SELECT
-    table_name as "Bảng",
-    column_name as "Cột",
-    enum_value as "Giá trị",
-    description as "Ý nghĩa",
-    example as "Ví dụ"
+SELECT table_name  as "Bảng",
+       column_name as "Cột",
+       enum_value  as "Giá trị",
+       description as "Ý nghĩa",
+       example     as "Ví dụ"
 FROM enum_documentation
 ORDER BY table_name, column_name, enum_value;
 

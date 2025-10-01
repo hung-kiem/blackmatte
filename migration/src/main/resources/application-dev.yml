@@ -8,6 +8,7 @@ spring:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
+
     connect-retries: 2
     connect-retries-interval: 60
 
