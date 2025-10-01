@@ -1,10 +1,13 @@
 spring:
-  flyway:
+  datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/blackmatte_blog}
-    user: ${DB_USER:blackmatte_admin}
+    username: ${DB_USER:blackmatte_admin}
     password: ${DB_PASSWORD:AdminBlackmatte@2024}
-
-    output-query-results: true
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
     connect-retries: 2
     connect-retries-interval: 60
 

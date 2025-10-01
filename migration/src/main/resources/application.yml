@@ -13,8 +13,6 @@ spring:
     clean-disabled: true
     # Encoding
     encoding: UTF-8
-    # Output settings
-    output-query-results: true
     skip-default-callbacks: false
     placeholder-replacement: false
     # Connection settings

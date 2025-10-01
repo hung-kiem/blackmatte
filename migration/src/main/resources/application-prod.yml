@@ -1,10 +1,14 @@
 spring:
-  flyway:
+  datasource:
     url: ${DB_URL}
-    user: ${DB_USER}
+    username: ${DB_USER}
     password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
 
-    output-query-results: false
     connect-retries: 5
     connect-retries-interval: 180
     lock-retry-count: 100
