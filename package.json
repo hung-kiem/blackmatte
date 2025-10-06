@@ -1,0 +1,27 @@
+{
+  "name": "blackmatte",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal blog built with Next.js and PostgreSQL",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push",
+    "db:migrate": "turbo run db:migrate",
+    "db:studio": "cd packages/database && pnpm db:studio"
+  },
+  "devDependencies": {
+    "turbo": "^2.2.3",
+    "prettier": "^3.3.3",
+    "@turbo/gen": "^2.2.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.12.3"
+}
