@@ -1,0 +1,59 @@
+/* src/styles/dvtt.css */
+
+/* Thiết lập chung cho toàn bộ trang */
+.fullscreen-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+/* Thiết lập cho chữ nhấp nháy */
+.blink-text {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #ff0000; /* Màu đỏ để tạo không khí Giáng sinh */
+    text-align: center;
+    animation: blink-animation 1s infinite; /* Hiệu ứng nhấp nháy */
+}
+
+/* Định nghĩa hiệu ứng nhấp nháy */
+@keyframes blink-animation {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Hiệu ứng chữ chạy từ phải sang trái */
+.marquee-text {
+    font-size: 2rem;
+    color: #008000; /* Màu xanh lá cây để tạo không khí Giáng sinh */
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%; /* Đảm bảo dòng chữ chạy qua toàn bộ chiều rộng */
+    position: relative;
+    margin: 20px 0; /* Thêm khoảng cách trên dưới để nhìn đẹp hơn */
+}
+
+.marquee-text span {
+    position: absolute;
+    display: inline-block;
+    animation: marquee-animation 10s linear infinite;
+}
+
+@keyframes marquee-animation {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
