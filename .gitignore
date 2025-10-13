@@ -4,6 +4,7 @@
 .env.staging
 .env.production
 .env.test
+packages/database/.env
 
 # Database initialization
 01-init-users.sql
