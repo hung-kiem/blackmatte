@@ -1,27 +1,72 @@
+---
+description: Template cho Epic File — mô tả một tính năng lớn (Feature Group)
+---
+
 # Epic Template
 
-Dùng file này để làm mẫu khi tạo một Epic mới trong `docs/agile/epics/`.
+> **Cách dùng**: Copy file này, đổi tên thành `EPC-XXX-short-name.md`, đặt vào `.agent/docs/agile/epics/`.
 
 ---
 
-Epic: [Mã Epic - Tên Epic]
-Status: [Todo / In Progress / Done]
-Owner: [Tên người phụ trách]
+```markdown
+---
+id: EPC-XXX
+title: [Tên Epic đầy đủ]
+status: PLANNED       # PLANNED | IN_PROGRESS | DONE | CANCELLED
+priority: HIGH        # LOW | MEDIUM | HIGH
+owner: [Tên người phụ trách]
+start_date: YYYY-MM-DD
+target_date: YYYY-MM-DD
+module: FE | ADMIN | DB | SYS  # Module chính bị ảnh hưởng
+---
 
-## 1. Mục tiêu (Objective)
+## 🎯 Mục tiêu (Objective)
 
-Mô tả ngắn gọn mục đích của tính năng lớn này. Giải quyết vấn đề gì cho hệ thống hoặc người dùng?
+Mô tả ngắn gọn mục đích của Epic này. Giải quyết vấn đề gì cho hệ thống hoặc người dùng?
 
-## 2. Phạm vi (Scope)
+_Ví dụ: Xây dựng Admin Portal với khả năng quản lý Blog Posts (CRUD) và phân quyền người dùng._
 
+---
+
+## 📦 Scope (Phạm vi)
+
+### Trong Scope
 - [ ] Tính năng A
 - [ ] Tính năng B
 - [ ] Tính năng C
 
-## 3. Ngoài phạm vi (Out of Scope)
+### Ngoài Scope (Out of Scope)
+> Rõ ràng những gì KHÔNG làm trong Epic này để tránh scope creep.
+- ❌ Không bao gồm: ...
 
-Những gì sẽ KHÔNG ĐƯỢC LÀM trong Epic này để tránh scope creep.
+---
 
-## 4. Rủi ro / Phụ thuộc (Risks & Dependencies)
+## 🗂️ Danh sách Sprints liên quan
 
-Cần CSDL chuẩn bị trước? Phụ thuộc thư viện bên ngoài nào?
+| Sprint | Mục tiêu Sprint | Status |
+|---|---|---|
+| SPR-XXX | ... | PLANNED |
+
+---
+
+## 🗒️ Danh sách Tasks
+
+| Task ID | Tên Task | Sprint | Status |
+|---|---|---|---|
+| TSK-XXX | ... | SPR-XXX | TODO |
+
+---
+
+## ⚠️ Rủi ro & Phụ thuộc (Risks & Dependencies)
+
+- **Phụ thuộc kỹ thuật**: (VD: Phải xong EPC-01-DB-Schema trước)
+- **Rủi ro**: (VD: AWS S3 setup phức tạp, cần research trước)
+
+---
+
+## 📊 Progress
+
+- **Tổng Tasks**: 0
+- **Hoàn thành**: 0 / 0
+- **Ghi chú**: ...
+```

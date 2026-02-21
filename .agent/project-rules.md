@@ -11,14 +11,33 @@ BẤT CỨ KHI NÀO AI bắt đầu một task mới, hoặc có sự nghi ngờ
 
 AI PHẢI tìm kiếm và đọc tài liệu đúng vị trí để đảm bảo ngữ cảnh chính xác. Không được tự suy diễn.
 
-- **Cấu trúc Thư mục & Công nghệ (Project Structure)**: Nằm ở file `.agent/rules/tech-stack.md`. Đây là nơi mô tả kiến trúc Monorepo và vị trí các file code chính.
-- **Rules Cốt Lõi**: `.agent/project-rules.md` (File này) và các file trong `.agent/rules/`.
-- **Luồng Nghiệp vụ & Thiết kế hệ thống**: Đọc trong `.agent/docs/`.
-- **Agile/Scrum (Epic, Sprint)**: Đọc trong `.agent/docs/agile/`.
-- **Tasks đang thực hiện**: Đọc trong `.agent/tasks/`.
-- **Kỹ năng chuyên môn (Skills)**: Đọc `.agent/skills/` tương ứng (VD: `react.md`, `nextjs.md`).
-- **Quy trình (Workflows)**: Đọc `.agent/workflows/`.
-- **Lỗi đã biết (Known Issues)**: Khi gặp lỗi lạ, bắt buộc tra cứu `.agent/docs/troubleshooting/known-issues.md` để không lặp lại sai lầm cũ.
+- **⭐ Trạng thái Project hiện tại**: `.agent/AGENT_CONTEXT.md` — Đọc file này ĐẦU TIÊN mỗi session để biết Sprint/Task/Branch đang active.
+- **Cấu trúc Thư mục & Công nghệ**: `.agent/rules/tech-stack.md`.
+- **Rules Cốt Lõi**: `.agent/project-rules.md` (File này) và toàn bộ `.agent/rules/`:
+  - `clean-architecture.md` — Phân tầng kiến trúc
+  - `code-style.md` — Google Style, ESLint, Prettier
+  - `git-branching.md` — Branching & commit convention
+  - `security.md` — Auth, secrets, input validation
+  - `error-handling.md` — Error types & patterns ⭐ NEW
+  - `api-conventions.md` — API Route response shape ⭐ NEW
+- **Kỹ năng chuyên môn (Skills)**: `.agent/skills/`:
+  - `nextjs.md`, `react.md`, `system-design.md`
+  - `prisma.md` — Repository pattern, transactions ⭐ NEW
+  - `typescript.md` — strict conventions, type sharing ⭐ NEW
+- **Quy trình (Workflows)**: `.agent/workflows/`:
+  - `feature-development.md`, `update-feature.md`, `hotfix.md`, `deployment.md`
+  - `code-review.md` — Checklist review theo Layer ⭐ NEW
+- **Thiết kế Hệ thống**: `.agent/docs/system-design.md`
+- **Database Design**: `.agent/docs/database/` ⭐ NEW
+  - `erd.md` — Entity Relationship Diagram
+  - `naming-convention.md` — Table/column/enum naming
+  - `index-strategy.md` — Khi nào cần index
+- **Agile/Scrum**: `.agent/docs/agile/` (Epic, Sprint, Task templates trong `templates/`)
+- **Requirements**: `.agent/docs/requirements/` (URD, SRS templates trong `templates/`)
+- **Testing**: `.agent/docs/testing/testing-strategy.md` ⭐ NEW
+- **Architecture Decisions**: `.agent/docs/decisions/` ⭐ NEW (ADR-XXX files)
+- **Tasks đang thực hiện**: `.agent/tasks/` (dùng template từ `docs/agile/templates/task-template.md`)
+- **Lỗi đã biết (Known Issues)**: `.agent/docs/troubleshooting/known-issues.md`
 
 ## 2. Git & Branching Strategy
 
