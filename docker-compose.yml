@@ -1,27 +1,22 @@
+version: "3.8"
+
 services:
   postgres:
-    image: postgres:15-alpine
-    container_name: blackmatte-postgres
-    restart: unless-stopped
+    image: postgres:16-alpine
+    container_name: blackmatte_db
     environment:
-      POSTGRES_DB: ${DB_NAME:-blackmatte_blog}
-      POSTGRES_USER: ${POSTGRES_SUPERUSER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_SUPERUSER_PASSWORD:-postgres@123}
-
-      PGDATA: /var/lib/postgresql/data
-
-      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+      POSTGRES_USER: superadmin # User có quyền cao nhất (Admin DBA)
+      POSTGRES_PASSWORD: superadmin_password
+      POSTGRES_DB: blackmatte_db
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "5432:5432"
     volumes:
-        - postgres_data:/var/lib/postgresql/data
-        - ./01-init-users.sql:/docker-entrypoint-initdb.d/01-init-users.sql:ro
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_SUPERUSER:-postgres} -d ${DB_NAME:-blackmatte_blog}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+      # Mount thư mục ./database-init vào /docker-entrypoint-initdb.d
+      # Docker engine sẽ tự động chạy file .sql bên trong khi DB rỗng lúc mới start
+      - ./database-init:/docker-entrypoint-initdb.d
+      # Volume để lưu trữ data postgres tránh mất mát khi restart container
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
 volumes:
   postgres_data:
-    driver: local
