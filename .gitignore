@@ -118,8 +118,3 @@ build/
 *.swo
 .DS_Store
 Thumbs.db
-
-# Agent/AI tools
-.agent/
-.cline/
-.cursor/
