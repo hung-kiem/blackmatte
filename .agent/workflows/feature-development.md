@@ -21,11 +21,28 @@ AI khi nhận một task lập trình tính năng mới phải đi qua đúng tr
 4. Tìm hiểu ngữ cảnh: Đọc các file liên quan trong thư mục dự án và `docs/database/`.
 5. Gửi **Implementation Plan** (Kế hoạch thực thi) cho User duyệt TRƯỚC KHI tạo nhánh hay viết code.
 
-## Bước 2: Chuẩn bị Git (Pre-branching)
+## 🚨 Bước 2: Chuẩn bị Git (Pre-branching) — BẮT BUỘC TRƯỚC KHI CODE
 
+> **TUYỆT ĐỐI KHÔNG ĐƯỢC viết code trên nhánh `main` hoặc `develop`.**
+> AI phải tạo feature branch TRƯỚC KHI viết BẤT KỲ dòng code nào.
+
+// turbo-all
 1. Kiểm tra Git local: `git status`. Xử lý code thừa.
 2. Cập nhật nhánh gốc: Checkout `develop` và `git pull origin develop`.
-3. Bắt đầu nhánh mới: `git checkout -b feat/<module>-<short_desc>`.
+   - Nếu chưa có nhánh `develop`, tạo mới: `git checkout -b develop`
+3. Bắt đầu nhánh mới từ `develop`: `git checkout -b feat/<module>-<short_desc>`.
+   - Ví dụ: `git checkout -b feat/SYS-sprint1-foundation`
+4. Xác nhận đang ở đúng nhánh: `git branch --show-current` — phải trả về tên nhánh `feat/...`.
+
+**Nếu đã lỡ code trên `main`:**
+```bash
+# Stash changes
+git stash
+# Create feature branch
+git checkout -b feat/<module>-<short_desc>
+# Apply stashed changes
+git stash pop
+```
 
 ## Bước 3: Thực thi Code (Execution)
 
@@ -33,14 +50,33 @@ AI khi nhận một task lập trình tính năng mới phải đi qua đúng tr
 2. Viết code tuần tự từ Database (Prisma) -> Backend Action -> Frontend UI (Nếu là full-stack feature).
 3. Đảm bảo UI/UX sử dụng Tailwind chuẩn xác, Responsive đầy đủ.
 
-## Bước 4: Kiểm tra Chất lượng (Verification)
+## Bước 4: Build & Kiểm tra Chất lượng (Verification) — Xem Rule 9
 
-1. Chạy Linter: `npm run lint`. Sửa TẤT CẢ các lỗi Google Code Style nếu có.
-2. Chạy Format: `npm run format` (Prettier).
-3. Build thử: `npm run build` để bắt lỗi Type checking hoặc Next.js build errors.
-4. Tự kiểm tra giao diện bằng Tool duyệt web ẩn.
+> Tham chiếu `project-rules.md` Rule 9 để chạy đầy đủ pipeline.
 
-## Bước 5: Bàn giao (Delivery)
+// turbo-all
+1. Cài dependencies: `pnpm install`
+2. Generate Prisma Client (nếu có schema changes): `npx prisma generate --config prisma.config.ts` (trong `packages/database/`)
+3. Chạy Linter: `pnpm lint`. Sửa TẤT CẢ các lỗi nếu có.
+4. Build thử: `pnpm build` để bắt lỗi Type checking hoặc Next.js build errors.
+5. Nếu build fail → áp dụng Rule 8 (tự sửa tối đa 3 lần).
+6. Tự kiểm tra giao diện bằng Tool duyệt web ẩn (nếu có UI changes).
+
+## 🔍 Bước 5: Code Review Tự động — BẮT BUỘC (Xem Rule 10)
+
+> Sau khi build pass, AI **BẮT BUỘC** tự review code theo `.agent/workflows/code-review.md`.
+
+1. Chạy đầy đủ checklist review theo 4 layers (Database → Business Logic → Security → UI).
+2. Kiểm tra Code Quality Checklist (no `any`, no dead code, proper naming, etc.).
+3. Viết **Self-Review Report** tóm tắt.
+4. Nếu phát hiện issues nghiêm trọng → Fix trước khi commit.
+5. Gửi Review Report kèm kết quả cho User.
+
+## Bước 6: Bàn giao (Delivery)
 
 1. Add & Commit (`git commit -m "feat(<module>): <commit message>"`).
-2. Report lại cho User qua hệ thống chat: Liệt kê các file đã đổi, tóm tắt kết quả, và yêu cầu User review Pull Request.
+2. Push branch lên remote: `git push origin feat/<module>-<short_desc>`.
+3. Report lại cho User qua hệ thống chat:
+   - Liệt kê các file đã đổi
+   - Self-Review Report tóm tắt
+   - Yêu cầu User review Pull Request

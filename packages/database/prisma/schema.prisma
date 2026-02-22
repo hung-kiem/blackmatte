@@ -1,19 +1,129 @@
+// Blackmatte — Prisma Schema
+// Source of Truth for all Database Entities
+// Epic: EPC-01 | SRS: SRS-SPR01 Section 3
+
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("PRISMA_DATABASE_URL")
-  directUrl = env("POSTGRES_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
+// ─── Enums ───────────────────────────────────────────────────
+
+enum UserRole {
+  ADMIN
+  VIEWER
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ProjectStatus {
+  ONGOING
+  COMPLETED
+  ARCHIVED
+}
+
+// ─── Models ──────────────────────────────────────────────────
+
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  role         UserRole @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  posts Post[]
 
   @@map("users")
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  title       String
+  slug        String     @unique
+  excerpt     String?
+  content     String
+  coverImage  String?
+  status      PostStatus @default(DRAFT)
+  publishedAt DateTime?
+  authorId    String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  author User      @relation(fields: [authorId], references: [id])
+  tags   PostTag[]
+
+  @@index([status, publishedAt])
+  @@index([authorId])
+  @@map("posts")
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  posts PostTag[]
+
+  @@map("tags")
+}
+
+model PostTag {
+  postId String
+  tagId  String
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@map("post_tags")
+}
+
+model Project {
+  id               String        @id @default(cuid())
+  name             String
+  shortDescription String
+  techStack        String
+  demoUrl          String?
+  duration         String?
+  teamSize         String?
+  myRole           String
+  highlights       String?
+  status           ProjectStatus @default(ONGOING)
+  priority         Int           @default(0)
+  thumbnailUrl     String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([priority])
+  @@index([status])
+  @@map("projects")
+}
+
+model Profile {
+  id          String   @id @default(cuid())
+  displayName String
+  headline    String?
+  bio         String?
+  email       String?
+  avatarUrl   String?
+  cvPdfUrl    String?
+  github      String?
+  linkedin    String?
+  twitter     String?
+  website     String?
+  updatedAt   DateTime @updatedAt
+
+  @@map("profile")
 }

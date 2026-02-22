@@ -25,6 +25,19 @@
     "db:migrate": {
       "cache": false
     },
+    "db:migrate:deploy": {
+      "cache": false
+    },
+    "db:migrate:status": {
+      "cache": false
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true
+    },
+    "db:reset": {
+      "cache": false
+    },
     "db:seed": {
       "cache": false
     },
