@@ -16,3 +16,10 @@ export {
 export { Textarea, type TextareaProps } from "./components/ui/textarea";
 export { Separator } from "./components/ui/separator";
 export { Avatar, AvatarImage, AvatarFallback } from "./components/ui/avatar";
+export * from "./components/ui/toggle";
+// New components added in Sprint 2
+export * from "./components/ui/table";
+export * from "./components/ui/dropdown-menu";
+export * from "./components/ui/popover";
+export * from "./components/ui/command";
+

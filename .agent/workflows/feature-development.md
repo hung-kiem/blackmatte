@@ -50,7 +50,16 @@ git stash pop
 2. Viết code tuần tự từ Database (Prisma) -> Backend Action -> Frontend UI (Nếu là full-stack feature).
 3. Đảm bảo UI/UX sử dụng Tailwind chuẩn xác, Responsive đầy đủ.
 
-## Bước 4: Build & Kiểm tra Chất lượng (Verification) — Xem Rule 9
+## Bước 4: Kiểm thử (Testing) — BẮT BUỘC
+
+> Áp dụng Testing Strategy (`docs/testing/testing-strategy.md`) trước khi bàn giao Code.
+
+1. **Sinh tài liệu Test Plan**: Nếu chưa có, tạo file `docs/testing/testplan-<S_ID>.md` dựa trên tài liệu yêu cầu (SRS).
+2. Viết Unit Tests (Vitest) cho các hàm utils, helper, và Zod Validators. Đảm bảo coverage.
+3. Viết Integration/E2E tests cho các luồng quan trọng (Server Actions).
+4. Thực thi test runner: `pnpm test` (hoặc test script tương ứng). Tất cả test case PHẢI pass.
+
+## Bước 5: Build & Kiểm tra Chất lượng (Verification) — Xem Rule 9
 
 > Tham chiếu `project-rules.md` Rule 9 để chạy đầy đủ pipeline.
 
@@ -62,7 +71,7 @@ git stash pop
 5. Nếu build fail → áp dụng Rule 8 (tự sửa tối đa 3 lần).
 6. Tự kiểm tra giao diện bằng Tool duyệt web ẩn (nếu có UI changes).
 
-## 🔍 Bước 5: Code Review Tự động — BẮT BUỘC (Xem Rule 10)
+## 🔍 Bước 6: Code Review Tự động — BẮT BUỘC (Xem Rule 10)
 
 > Sau khi build pass, AI **BẮT BUỘC** tự review code theo `.agent/workflows/code-review.md`.
 
