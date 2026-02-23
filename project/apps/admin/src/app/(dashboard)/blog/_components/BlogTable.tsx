@@ -11,6 +11,9 @@ import {
 } from "@repo/ui";
 import { format } from "date-fns";
 import { BlogTableActions } from "./BlogTableActions";
+import { Button } from "@repo/ui";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // Types extracted from Prisma relation
 type PostWithRelations = {
@@ -24,8 +27,24 @@ type PostWithRelations = {
   tags: { tag: { id: string; name: string } }[];
 };
 
-export function BlogTable({ data }: { data: PostWithRelations[] }) {
-  if (data.length === 0) {
+interface BlogTableProps {
+  data: PostWithRelations[];
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+}
+
+export function BlogTable({ data, currentPage, totalPages, totalItems }: BlogTableProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", newPage.toString());
+    router.push(`?${params.toString()}`);
+  };
+
+  if (totalItems === 0) {
     return (
       <div className="text-center py-10">
         <p className="text-muted-foreground">No blog posts found. Create your first post!</p>
@@ -83,6 +102,35 @@ export function BlogTable({ data }: { data: PostWithRelations[] }) {
           ))}
         </TableBody>
       </Table>
+      
+      {totalPages > 1 && (
+        <div className="flex items-center justify-end space-x-2 py-4 px-4 border-t">
+          <div className="flex-1 text-sm text-muted-foreground">
+            Showing {data.length} of {totalItems} posts.
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage <= 1}
+          >
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Previous
+          </Button>
+          <div className="text-sm font-medium mx-2">
+            Page {currentPage} of {totalPages}
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage >= totalPages}
+          >
+            Next
+            <ChevronRight className="h-4 w-4 ml-1" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

@@ -11,18 +11,33 @@ export default async function BlogListPage({
 }) {
   const statusFilter = searchParams.status === "PUBLISHED" ? "PUBLISHED" : searchParams.status === "DRAFT" ? "DRAFT" : undefined;
   
-  const posts = await prismaAdmin.post.findMany({
-    where: {
-      status: statusFilter,
-      // hide archived by default unless specifically asked
-      NOT: { status: "ARCHIVED" }
-    },
-    include: {
-      author: { select: { name: true, email: true } },
-      tags: { include: { tag: true } }
-    },
-    orderBy: { updatedAt: "desc" },
-  });
+  const page = Number(searchParams.page) || 1;
+  const pageSize = 10;
+  const skip = (page - 1) * pageSize;
+
+  const [posts, totalPosts] = await Promise.all([
+    prismaAdmin.post.findMany({
+      where: {
+        status: statusFilter,
+        NOT: { status: "ARCHIVED" }
+      },
+      include: {
+        author: { select: { name: true, email: true } },
+        tags: { include: { tag: true } }
+      },
+      orderBy: { updatedAt: "desc" },
+      skip,
+      take: pageSize,
+    }),
+    prismaAdmin.post.count({
+      where: {
+        status: statusFilter,
+        NOT: { status: "ARCHIVED" }
+      }
+    })
+  ]);
+
+  const totalPages = Math.ceil(totalPosts / pageSize);
 
   return (
     <div className="space-y-6">
@@ -45,7 +60,7 @@ export default async function BlogListPage({
         </CardHeader>
         <CardContent>
           {/* Client Component Data Table */}
-          <BlogTable data={posts} />
+          <BlogTable data={posts} currentPage={page} totalPages={totalPages} totalItems={totalPosts} />
         </CardContent>
       </Card>
     </div>
